@@ -1,46 +1,30 @@
-class WordReplacer
-  attr_accessor :name, :gender, :date
+class WordDocument
+  attr_accessor :title, :author
 
-  def initialize(content)
+  def initialize(title, author, content)
+    @title = title
+    @author = author
     @content = content
-  end
-
-  # def replace_name(new_name)
-  #   @content.gsub!('NAME', new_name)
-  # end
-
-  # def replace_gender(new_gender)
-  #   @content.gsub!('GENDER', new_gender)
-  # end
-
-  # def replace_date(new_date)
-  #   @content.gsub!('DATE', new_date)
-  # end
-
-  def replace_word(old_word, new_word)
-    @content.gsub!(old_word, new_word)
   end
 
   def content
     @content
   end
 
-  def method_missing(name, *args)
-    name = name.to_s
-    puts "method_missing applied."
-    if name =~ /^replace_\w+/
-      method_name = name.split('_')
-      replace_word(method_name[1].upcase, args.first)
-    else
-      return
-    end
+  def +(other)
+    return self.content + other.content
   end
-
 
 end
 
-w = WordReplacer.new("hello NAME, are you a GENDER? on DATE")
-w.replace_name("Enoch Ko")
-w.replace_gender("Male")
-w.replace_date("Yesterday")
-puts w.content
+class String
+  remove_method :+
+
+end
+
+first = WordDocument.new("First post","Enoch Ko", "This is a first post. ")
+second = WordDocument.new("Second post", "Jaemin Ko", "This is a second post. ")
+
+puts first + second
+
+puts "Hello" + " World"
