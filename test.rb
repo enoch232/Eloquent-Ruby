@@ -1,30 +1,10 @@
-class WordDocument
-  attr_accessor :title, :author
-
-  def initialize(title, author, content)
-    @title = title
-    @author = author
-    @content = content
+class Checker
+  def self.check_version
+    if RUBY_VERSION >= '2.3'
+  	  puts "THIS IS NEW!"
+    else
+      puts "THIS IS OLD!"
+    end
   end
-
-  def content
-    @content
-  end
-
-  def +(other)
-    return self.content + other.content
-  end
-
+  self.check_version
 end
-
-class String
-  remove_method :+
-
-end
-
-first = WordDocument.new("First post","Enoch Ko", "This is a first post. ")
-second = WordDocument.new("Second post", "Jaemin Ko", "This is a second post. ")
-
-puts first + second
-
-puts "Hello" + " World"
