@@ -1,27 +1,26 @@
-class ClassChangeNotifier
-  def self.reload
-  	sleep 1
-    remove_instance_methods
-    load( __FILE__ )
+
+class MethodBuilder
+  def self.new_class_method(method_name)
+    code_to_evaluate = %Q{
+      def self.#{method_name}
+        puts "Hello world!"
+      end
+    }
+    class_eval(code_to_evaluate)
   end
-  def self.remove_instance_methods
-    instance_methods(false).each do |method|
-      remove_method(method)
+  
+  def self.new_instance_method(method_name)
+    define_method(method_name) do 
+      puts "hi"
     end
   end
-
-  def self.old_method
-    puts "This is an old method"
-  end
-end
-class ClassChangeNotifier
-
-  def self.old_method
-    puts "This is a new method"
-  end
 end
 
+MethodBuilder.new_class_method(:say_hello_world)
 
-ClassChangeNotifier.old_method
+MethodBuilder.say_hello_world
 
-ClassChangeNotifier.reload
+
+MethodBuilder.new_instance_method(:say_hi)
+m = MethodBuilder.new
+m.say_hi
